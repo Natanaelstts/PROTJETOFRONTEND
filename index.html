@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGIS - Sistema de Gerenciamento Integrado de Saúde</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="accessSection" class="view active">
+        <div class="access-wrapper">
+            <div class="access-panel">
+                <div class="access-header">
+                    <div class="brand-emblem">
+                        <i class="fas fa-notes-medical"></i>
+                    </div>
+                    <h2>SGIS</h2>
+                    <p>Plataforma para Gerenciamento de Operações de Saúde</p>
+                </div>
+                <form class="access-form" onsubmit="handleAuthSubmission(event)">
+                    <div class="form-field">
+                        <label for="profileRole">Cargo do Usuário</label>
+                        <select id="profileRole" name="profileRole" required>
+                            <option value="physician">Médico</option>
+                            <option value="nurse">Enfermeiro(a)</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="userEmail">Endereço de E-mail</label>
+                        <input type="email" id="userEmail" name="userEmail" placeholder="seu.email@sgi.com" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="userPasskey">Chave de Acesso</label>
+                        <input type="password" id="userPasskey" name="userPasskey" placeholder="Insira sua chave secreta" required>
+                    </div>
+                    <button type="submit" class="primary-action-btn">Entrar na Plataforma</button>
+                    <button type="button" class="forgot-pass-link">Problemas com a chave de acesso?</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="controlPanel" class="view">
+        <header class="app-header">
+            <div class="header-left-area">
+                <div class="brand-emblem">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>SGIS</span>
+                </div>
+            </div>
+            <div class="header-right-area">
+                <div class="user-display-info">
+                    <span id="displayName">Dr(a). [Nome do Usuário]</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <button onclick="performLogout()" class="exit-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            <div class="panel-overview-header">
+                <h1>Painel de Controle</h1>
+                <p>Boas-vindas ao sistema de gerenciamento integrado de saúde</p>
+            </div>
+            <div class="metrics-summary-grid">
+                <div class="data-card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-data">
+                        <h3>165</h3>
+                        <p>Total de Pacientes Ativos</p>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="card-data">
+                        <h3>30</h3>
+                        <p>Agendamentos para Hoje</p>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="card-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="card-data">
+                        <h3>85%</h3>
+                        <p>Taxa de Ocupação de Leitos</p>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <div class="card-icon">
+                        <i class="fas fa-first-aid"></i>
+                    </div>
+                    <div class="card-data">
+                        <h3>7</h3>
+                        <p>Casos de Urgência</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons-grid">
+                <button class="action-button-item" onclick="showPatientRegistrationForm()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registrar Novo Paciente</span>
+                </button>
+                <button class="action-button-item" onclick="showPatientOverviewList()">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Ver Lista de Pacientes</span>
+                </button>
+                <button class="action-button-item">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Programar Novo Agendamento</span>
+                </button>
+                <button class="action-button-item">
+                    <i class="fas fa-file-waveform"></i>
+                    <span>Gerenciar Prontuários</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div id="patientRegistrationSection" class="view">
+        <header class="app-header">
+            <div class="header-left-area">
+                <button onclick="showControlPanel()" class="back-nav-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Registrar Paciente</h2>
+            </div>
+            <div class="header-right-area">
+                <button onclick="performLogout()" class="exit-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            <div class="form-content-wrapper">
+                <form class="patient-registration-form" onsubmit="processPatientRecord(event)">
+                    <div class="form-group-section">
+                        <h3>Dados Pessoais do Paciente</h3>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="patientFullName">Nome Completo</label>
+                                <input type="text" id="patientFullName" name="patientFullName" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="patientIdentifier">CPF</label>
+                                <input type="text" id="patientIdentifier" name="patientIdentifier" placeholder="000.000.000-00" required>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="patientContactEmail">E-mail de Contato</label>
+                                <input type="email" id="patientContactEmail" name="patientContactEmail">
+                            </div>
+                            <div class="form-field">
+                                <label for="patientContactPhone">Telefone</label>
+                                <input type="tel" id="patientContactPhone" name="patientContactPhone" placeholder="(XX) XXXXX-XXXX" required>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="patientBirthDate">Data de Nascimento</label>
+                                <input type="date" id="patientBirthDate" name="patientBirthDate" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="patientGenderIdentity">Identidade de Gênero</label>
+                                <select id="patientGenderIdentity" name="patientGenderIdentity" required>
+                                    <option value="">Selecione</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                    <option value="O">Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-section">
+                        <h3>Informações de Endereço</h3>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="patientResidentialAddress">Endereço Residencial</label>
+                                <input type="text" id="patientResidentialAddress" name="patientResidentialAddress" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="patientCityLocation">Cidade</label>
+                                <input type="text" id="patientCityLocation" name="patientCityLocation" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-control-actions">
+                        <button type="button" onclick="showControlPanel()" class="secondary-action-btn">Cancelar Operação</button>
+                        <button type="submit" class="primary-action-btn">Confirmar Registro do Paciente</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div id="patientOverviewSection" class="view">
+        <header class="app-header">
+            <div class="header-left-area">
+                <button onclick="showControlPanel()" class="back-nav-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Lista de Pacientes</h2>
+            </div>
+            <div class="header-right-area">
+                <button onclick="performLogout()" class="exit-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            <div class="list-control-header">
+                <div class="search-input-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Pesquisar pacientes por nome, CPF ou telefone..." onkeyup="filterPatientRecords(this.value)">
+                </div>
+                <button onclick="showPatientRegistrationForm()" class="primary-action-btn">
+                    <i class="fas fa-plus"></i> Novo Registro de Paciente
+                </button>
+            </div>
+            <div class="table-display-container">
+                <table class="patient-data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>CPF</th>
+                            <th>Contato</th>
+                            <th>Idade</th>
+                            <th>Última Consulta</th>
+                            <th>Ações Rápidas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientRecordsBody">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

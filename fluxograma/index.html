@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxograma SGIS - Sistema de Gerenciamento Integrado de Saúde</title>
+    <style>
+        /* Reset básico e configurações globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0faff 100%); /* Fundo azul claro */
+            min-height: 100vh;
+            padding: 25px;
+            color: #334155;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha no topo */
+        }
+
+        .flowchart-container {
+            max-width: 1200px; /* Largura máxima ajustada */
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .flowchart-header {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%); /* Gradiente azul */
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .flowchart-header h1 {
+            font-size: 2.8rem; /* Tamanho do título ajustado */
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .flowchart-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .flowchart-content {
+            padding: 40px; /* Padding ajustado */
+        }
+
+        .flow-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem; /* Tamanho do título da seção ajustado */
+            color: #3182ce; /* Azul mais escuro */
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e2e8f0; /* Borda mais suave */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        /* Estilos dos blocos do fluxograma */
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px; /* Espaçamento ajustado */
+            margin: 30px 0;
+        }
+
+        .flow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px; /* Espaçamento ajustado */
+            flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+        }
+
+        .flow-block {
+            background: #ffffff;
+            border: 2px solid #e2e8f0; /* Borda mais suave */
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 220px; /* Largura mínima ajustada */
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra ajustada */
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .flow-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            border-color: #4299e1; /* Borda azul no hover */
+        }
+
+        /* Cores e formas dos blocos */
+        .flow-block.start-end {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); /* Verde */
+            color: white;
+            border-color: #38a169;
+            padding: 25px;
+        }
+
+        .flow-block.process {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%); /* Azul */
+            color: white;
+            border-color: #3182ce;
+        }
+
+        .flow-block.decision {
+            background: linear-gradient(135deg, #f6e05e 0%, #ecc94b 100%); /* Amarelo */
+            color: #334155; /* Texto escuro para contraste */
+            border-color: #ecc94b;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
+            padding: 25px 30px;
+        }
+
+        .flow-block.module {
+            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%); /* Roxo */
+            color: white;
+            border-color: #6b46c1;
+        }
+
+        .flow-block.critical { /* Vermelho para emergência crítica */
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .flow-block.urgent { /* Laranja para urgência */
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-color: #d97706;
+        }
+
+        .flow-block.priority { /* Verde para prioridade */
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-color: #059669;
+        }
+
+        .flow-block.non-urgent { /* Azul claro para não urgente */
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .flow-arrow {
+            font-size: 2.2rem; /* Tamanho da seta ajustado */
+            color: #64748b; /* Cor da seta */
+            margin: 10px 0;
+        }
+
+        .flow-arrow.horizontal {
+            transform: rotate(90deg);
+        }
+
+        /* Grid de Módulos */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajuste para módulos */
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .module-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%); /* Roxo para módulos */
+            color: white;
+            padding: 20px;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .module-content {
+            padding: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+            counter-reset: feature-counter;
+        }
+
+        .feature-list li {
+            counter-increment: feature-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .feature-list li::before {
+            content: counter(feature-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #6b46c1; /* Roxo para marcador de lista */
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Legenda */
+        .flow-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .legend-box {
+            width: 35px;
+            height: 25px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .flowchart-content {
+                padding: 30px;
+            }
+            .flow-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+            .flow-legend {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .flowchart-header h1 {
+                font-size: 2.2rem;
+            }
+            .flowchart-header p {
+                font-size: 1rem;
+            }
+            .flowchart-content {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.7rem;
+            }
+            .flow-block {
+                min-width: 180px;
+                padding: 15px;
+            }
+            .flow-block h3 {
+                font-size: 1.1rem;
+            }
+            .flow-block p {
+                font-size: 0.85rem;
+            }
+            .flow-arrow {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .flowchart-header h1 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .flow-block {
+                min-width: 100%; /* Ocupa toda a largura disponível */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="flowchart-container">
+    <div class="flowchart-header">
+        <h1>FLUXOGRAMA SGIS</h1>
+        <p>Sistema de Gerenciamento Integrado de Saúde</p>
+    </div>
+
+    <div class="flowchart-content">
+
+        <!-- Legenda do Fluxograma -->
+        <div class="flow-legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);"></div>
+                <span>Início/Fim</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);"></div>
+                <span>Processo</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: linear-gradient(135deg, #f6e05e 0%, #ecc94b 100%);"></div>
+                <span>Decisão</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);"></div>
+                <span>Módulo</span>
+            </div>
+        </div>
+
+        <!-- Fluxo Principal de Acesso e Painel de Controle -->
+        <div class="flow-section">
+            <h2 class="section-title">Fluxo de Acesso e Painel de Controle</h2>
+            <div class="flow-diagram">
+                <div class="flow-block start-end">
+                    <h3>INÍCIO</h3>
+                    <p>Abertura do SGIS</p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block process">
+                    <h3>INTERFACE DE ACESSO</h3>
+                    <p>Entrada de Credenciais</p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block decision">
+                    <h3>CREDENCIAS VÁLIDAS?</h3>
+                </div>
+                <div class="flow-row">
+                    <div>
+                        <div class="flow-arrow horizontal">↓</div>
+                        <div class="flow-block critical">
+                            <h3>ERRO</h3>
+                            <p>Retorno ao Acesso</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flow-arrow horizontal">↓</div>
+                        <div class="flow-block module">
+                            <h3>PAINEL DE CONTROLE</h3>
+                            <p>Visão Geral do Sistema</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block start-end">
+                    <h3>FIM</h3>
+                    <p>Sair da Plataforma</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fluxo de Gerenciamento de Pacientes -->
+        <div class="flow-section">
+            <h2 class="section-title">Fluxo de Gerenciamento de Pacientes</h2>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">REGISTRO DE PACIENTES</div>
+                    <div class="module-content">
+                        <ol class="feature-list">
+                            <li>Coleta de Dados Pessoais</li>
+                            <li>Inclusão de Informações de Endereço</li>
+                            <li>Confirmação de Registro</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <div class="module-header">LISTA DE PACIENTES</div>
+                    <div class="module-content">
+                        <ol class="feature-list">
+                            <li>Pesquisa e Filtragem de Registros</li>
+                            <li>Visualização Detalhada</li>
+                            <li>Opção de Modificar Registro</li>
+                            <li>Acesso Rápido a Novo Registro</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fluxo de Atendimento de Urgência -->
+        <div class="flow-section">
+            <h2 class="section-title">Fluxo de Atendimento de Urgência</h2>
+            <div class="flow-diagram">
+                <div class="flow-block start-end">
+                    <h3>CHEGADA</h3>
+                    <p>Paciente na Unidade</p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block process">
+                    <h3>AVALIAÇÃO DE TRIAGEM</h3>
+                    <p>Protocolo de Classificação</p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block decision">
+                    <h3>CLASSIFICAÇÃO DE URGÊNCIA?</h3>
+                </div>
+                <div class="flow-row">
+                    <div class="flow-block critical">
+                        <h3>CRÍTICO</h3>
+                        <p>Atenção Imediata</p>
+                    </div>
+                    <div class="flow-block urgent">
+                        <h3>URGENTE</h3>
+                        <p>15-60 min</p>
+                    </div>
+                    <div class="flow-block priority">
+                        <h3>PRIORITÁRIO</h3>
+                        <p>60-180 min</p>
+                    </div>
+                    <div class="flow-block non-urgent">
+                        <h3>NÃO URGENTE</h3>
+                        <p>+180 min</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block process">
+                    <h3>ATENDIMENTO MÉDICO INICIAL</h3>
+                    <p>Avaliação e Primeiros Socorros</p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block decision">
+                    <h3>INTERNAÇÃO / TRANSFERÊNCIA?</h3>
+                </div>
+                <div class="flow-row">
+                    <div>
+                        <div class="flow-arrow horizontal">↓</div>
+                        <div class="flow-block start-end">
+                            <h3>ALTA</h3>
+                            <p>Paciente Liberado</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flow-arrow horizontal">↓</div>
+                        <div class="flow-block module">
+                            <h3>ENCAMINHAMENTO</h3>
+                            <p>Internação ou Transferência</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-block start-end">
+                    <h3>FIM</h3>
+                    <p>Finalização do Atendimento</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

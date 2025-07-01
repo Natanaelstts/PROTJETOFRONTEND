@@ -1,0 +1,538 @@
+/* Reset e configurações base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte alterada */
+    background: linear-gradient(135deg, #e6f7ff 0%, #f0faff 100%); /* Novo gradiente de fundo azul claro */
+    min-height: 100vh;
+    color: #334155; /* Nova cor de texto principal (cinza escuro) */
+}
+
+/* Sistema de Telas/Vistas (antes .screen) */
+.view {
+    display: none;
+    min-height: 100vh;
+}
+
+.view.active {
+    display: block;
+}
+
+/* Seção de Acesso (Login) (antes .login-container) */
+.access-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.access-panel { /* Antes .login-card */
+    background: #ffffff;
+    border-radius: 12px; /* Borda levemente alterada */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px; /* Largura máxima ligeiramente maior */
+    animation: fadeIn 0.5s ease-out; /* Animação de entrada */
+}
+
+.access-header { /* Antes .login-header */
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.brand-emblem { /* Antes .logo */
+    width: 60px; /* Tamanho do logo alterado */
+    height: 60px;
+    background: linear-gradient(45deg, #4299e1 0%, #3182ce 100%); /* Novo gradiente de azul para o logo */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    color: white;
+    font-size: 2rem; /* Tamanho da fonte do ícone alterado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.access-header h2 { /* Antes .login-header h1 */
+    font-size: 2.3rem; /* Tamanho da fonte alterado */
+    font-weight: 700; /* Peso da fonte alterado */
+    color: #1a202c;
+    margin-bottom: 0.6rem;
+}
+
+.access-header p {
+    color: #64748b; /* Nova cor de parágrafo */
+    font-size: 0.95rem;
+}
+
+/* Campos de Formulário (antes .form-group) */
+.form-field {
+    margin-bottom: 1.3rem; /* Margem ajustada */
+}
+
+.form-field label {
+    display: block;
+    font-weight: 600; /* Peso da fonte ajustado */
+    margin-bottom: 0.6rem;
+    color: #475569; /* Nova cor de label */
+}
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    padding: 0.9rem; /* Padding ajustado */
+    border: 1px solid #cbd5e1; /* Nova cor de borda */
+    border-radius: 8px; /* Borda arredondada ajustada */
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    outline: none;
+    border-color: #4299e1; /* Nova cor de foco (azul) */
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25); /* Nova sombra de foco */
+}
+
+/* Botões de Ação (antes .btn-primary, .btn-link) */
+.primary-action-btn { /* Antes .btn-primary */
+    width: 100%;
+    background: linear-gradient(45deg, #4299e1 0%, #3182ce 100%); /* Novo gradiente de azul para o botão */
+    color: white;
+    border: none;
+    padding: 0.9rem 1.8rem; /* Padding ajustado */
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Transição mais abrangente */
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.primary-action-btn:hover {
+    background: linear-gradient(45deg, #3182ce 0%, #2b6cb0 100%); /* Cor de hover mais escura */
+    transform: translateY(-2px); /* Efeito sutil ao passar o mouse */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.secondary-action-btn { /* Novo botão secundário para formulários */
+    background: #e2e8f0; /* Cor cinza claro */
+    color: #4a5568;
+    border: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.secondary-action-btn:hover {
+    background: #cbd5e0; /* Cor cinza um pouco mais escuro no hover */
+}
+
+
+.forgot-pass-link { /* Antes .btn-link */
+    background: none;
+    border: none;
+    color: #4299e1; /* Cor do link azul */
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none; /* Remover sublinhado padrão */
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.forgot-pass-link:hover {
+    text-decoration: underline; /* Adicionar sublinhado no hover */
+    opacity: 1;
+}
+
+.back-nav-btn { /* Antes .btn-back */
+    background: none;
+    border: none;
+    color: #4299e1;
+    cursor: pointer;
+    padding: 0.6rem;
+    border-radius: 8px;
+    margin-right: 1.2rem;
+    transition: background-color 0.2s;
+    font-size: 1.1rem;
+}
+
+.back-nav-btn:hover {
+    background: #ebf8ff; /* Fundo azul claro no hover */
+}
+
+.exit-btn { /* Antes .btn-logout */
+    background: #ef4444; /* Cor vermelha para sair */
+    color: white;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.exit-btn:hover {
+    background: #dc2626;
+}
+
+.action-quick-btn { /* Antes .btn-action */
+    background: none;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    padding: 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 0.3rem;
+    transition: all 0.2s;
+}
+
+.action-quick-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+    border-color: #a0aec0;
+}
+
+/* Cabeçalho da Aplicação (antes .header) */
+.app-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 2.5rem; /* Padding ajustado */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-left-area { /* Antes .header-left */
+    display: flex;
+    align-items: center;
+}
+
+.header-left-area .brand-emblem { /* Antes header-left .logo */
+    width: auto;
+    height: auto;
+    background: none;
+    color: #4299e1; /* Cor azul para o logo no header */
+    margin: 0;
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+    box-shadow: none;
+}
+
+.header-left-area .brand-emblem span { /* Antes header-left .logo span */
+    font-weight: 700; /* Peso da fonte mais forte */
+    font-size: 1.5rem;
+    color: #1a202c;
+}
+
+.header-left-area h2 { /* Antes .header-left h2 */
+    color: #1f2937;
+    font-size: 1.6rem;
+}
+
+.header-right-area { /* Antes .header-right */
+    display: flex;
+    align-items: center;
+    gap: 1.2rem; /* Espaçamento ajustado */
+}
+
+.user-display-info { /* Antes .user-info */
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.user-display-info i {
+    font-size: 1.6rem;
+}
+
+/* Conteúdo Principal (antes .main-content) */
+.main-content-area {
+    padding: 2.5rem; /* Padding ajustado */
+}
+
+.panel-overview-header h1 { /* Antes .dashboard-header h1 */
+    font-size: 2.4rem; /* Tamanho da fonte ajustado */
+    color: #1a202c;
+    margin-bottom: 0.6rem;
+}
+
+.panel-overview-header p { /* Antes .dashboard-header p */
+    color: #64748b;
+    margin-bottom: 2.5rem;
+}
+
+/* Métricas do Dashboard (antes .metrics-grid) */
+.metrics-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Min-width ajustado */
+    gap: 1.8rem; /* Espaçamento ajustado */
+    margin-bottom: 2.5rem;
+}
+
+.data-card { /* Antes .metric-card */
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1.8rem; /* Padding ajustado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Sombra ajustada */
+    display: flex;
+    align-items: center;
+    gap: 1.2rem; /* Espaçamento ajustado */
+}
+
+.card-icon { /* Antes .metric-icon */
+    width: 52px; /* Tamanho do ícone ajustado */
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem; /* Tamanho da fonte do ícone ajustado */
+    color: white;
+}
+
+/* Novas cores para os ícones das métricas */
+.data-card:nth-child(1) .card-icon { background: linear-gradient(45deg, #4299e1 0%, #3182ce 100%); } /* Azul */
+.data-card:nth-child(2) .card-icon { background: linear-gradient(45deg, #48bb78 0%, #38a169 100%); } /* Verde */
+.data-card:nth-child(3) .card-icon { background: linear-gradient(45deg, #f6e05e 0%, #ecc94b 100%); } /* Amarelo */
+.data-card:nth-child(4) .card-icon { background: linear-gradient(45deg, #fc8181 0%, #e53e3e 100%); } /* Vermelho */
+
+.card-data h3 { /* Antes .metric-info h3 */
+    font-size: 2rem; /* Tamanho da fonte ajustado */
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.3rem;
+}
+
+.card-data p { /* Antes .metric-info p */
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* Botões de Ação do Painel (antes .actions-grid) */
+.action-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* Min-width ajustado */
+    gap: 1.2rem; /* Espaçamento ajustado */
+}
+
+.action-button-item { /* Antes .action-card */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.action-button-item:hover {
+    border-color: #4299e1; /* Cor da borda azul no hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px); /* Efeito de elevação mais notável */
+}
+
+.action-button-item i {
+    font-size: 2.2rem; /* Tamanho da fonte do ícone ajustado */
+    color: #4299e1; /* Cor azul para os ícones de ação */
+}
+
+.action-button-item span {
+    font-weight: 600;
+    color: #1a202c;
+    font-size: 1rem;
+}
+
+/* Formulário de Registro de Paciente (antes .form-container) */
+.form-content-wrapper {
+    max-width: 850px; /* Largura máxima ajustada */
+    margin: 0 auto;
+}
+
+.patient-registration-form { /* Antes .patient-form */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 3rem; /* Padding ajustado */
+}
+
+.form-group-section { /* Antes .form-section */
+    margin-bottom: 2.5rem; /* Margem ajustada */
+}
+
+.form-group-section h3 {
+    color: #1a202c;
+    font-size: 1.4rem; /* Tamanho da fonte ajustado */
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #e2e8f0; /* Borda um pouco mais forte */
+}
+
+.form-row-group { /* Antes .form-row */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; /* Espaçamento ajustado */
+    margin-bottom: 1.5rem;
+}
+
+.form-control-actions { /* Antes .form-actions */
+    display: flex;
+    gap: 1.2rem; /* Espaçamento ajustado */
+    justify-content: flex-end;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Lista de Pacientes (antes .list-header) */
+.list-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Adicionado para responsividade */
+    gap: 1rem; /* Espaçamento entre itens */
+}
+
+.search-input-bar { /* Antes .search-bar */
+    position: relative;
+    max-width: 450px; /* Largura máxima ajustada */
+    flex-grow: 1;
+    margin-right: 1.5rem; /* Margem ajustada */
+}
+
+.search-input-bar i {
+    position: absolute;
+    left: 1rem; /* Posição ajustada */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+}
+
+.search-input-bar input {
+    width: 100%;
+    padding: 0.9rem 0.9rem 0.9rem 3rem; /* Padding ajustado para o ícone */
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.table-display-container { /* Antes .table-container */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.patient-data-table { /* Antes .patients-table */
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patient-data-table th {
+    background: #f8fafc; /* Fundo mais claro para o cabeçalho da tabela */
+    padding: 1.2rem; /* Padding ajustado */
+    text-align: left;
+    font-weight: 700; /* Peso da fonte mais forte */
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.patient-data-table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid #f1f5f9; /* Linha divisória mais suave */
+}
+
+.patient-data-table tr:hover {
+    background: #f0faff; /* Fundo azul claro no hover da linha */
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade (Manter adaptações básicas, mas com novas classes) */
+@media (max-width: 768px) {
+    .app-header {
+        padding: 1rem;
+        flex-direction: column; /* Cabeçalho em coluna em telas pequenas */
+        gap: 0.8rem;
+    }
+
+    .header-right-area {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .main-content-area {
+        padding: 1.5rem;
+    }
+
+    .metrics-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row-group {
+        grid-template-columns: 1fr;
+    }
+
+    .list-control-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input-bar {
+        margin-right: 0;
+        width: 100%; /* Ocupa toda a largura */
+    }
+
+    .patient-data-table {
+        font-size: 0.9rem;
+    }
+
+    .form-control-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 640px) {
+    .patient-data-table th,
+    .patient-data-table td {
+        padding: 0.8rem;
+    }
+    .table-display-container {
+        overflow-x: auto; /* Permite rolagem lateral em tabelas grandes */
+    }
+    .access-panel {
+        padding: 2rem;
+    }
+}
