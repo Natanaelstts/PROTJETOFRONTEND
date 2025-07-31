@@ -34,15 +34,14 @@
                     </div>
                     <div class="form-field">
                         <label for="userPasskey">Chave de Acesso</label>
-                        <input type="password" id="userPasskey" name="userPasskey" placeholder="Insira sua chave secreta" required>
+                        <input type="password" id="userPasskey" name="userPasskey" placeholder="Insira sua numeração" required>
                     </div>
                     <button type="submit" class="primary-action-btn">Entrar na Plataforma</button>
-                    <button type="button" class="forgot-pass-link">Problemas com a chave de acesso?</button>
+                    <button type="button" class="forgot-pass-link" onclick="handleForgotPassword()">Problemas com a chave de acesso?</button>
                 </form>
             </div>
         </div>
     </div>
-
     <div id="controlPanel" class="view">
         <header class="app-header">
             <div class="header-left-area">
@@ -56,12 +55,11 @@
                     <span id="displayName">Dr(a). [Nome do Usuário]</span>
                     <i class="fas fa-user-circle"></i>
                 </div>
-                <button onclick="performLogout()" class="exit-btn">
+                <button onclick="performLogout()" class="exit-btn" aria-label="Sair da Plataforma">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </header>
-
         <main class="main-content-area">
             <div class="panel-overview-header">
                 <h1>Painel de Controle</h1>
@@ -105,7 +103,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="action-buttons-grid">
                 <button class="action-button-item" onclick="showPatientRegistrationForm()">
                     <i class="fas fa-user-plus"></i>
@@ -115,33 +112,31 @@
                     <i class="fas fa-clipboard-list"></i>
                     <span>Ver Lista de Pacientes</span>
                 </button>
-                <button class="action-button-item">
+                <button class="action-button-item" onclick="showNewAppointmentForm()">
                     <i class="fas fa-calendar-plus"></i>
                     <span>Programar Novo Agendamento</span>
                 </button>
-                <button class="action-button-item">
-                    <i class="fas fa-file-waveform"></i>
+                <button class="action-button-item" onclick="showMedicalRecordsList()">
+                    <i class="fa fa-file-waveform"></i>
                     <span>Gerenciar Prontuários</span>
                 </button>
             </div>
         </main>
     </div>
-
     <div id="patientRegistrationSection" class="view">
         <header class="app-header">
             <div class="header-left-area">
-                <button onclick="showControlPanel()" class="back-nav-btn">
+                <button onclick="showControlPanel()" class="back-nav-btn" aria-label="Voltar para o Painel de Controle">
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <h2>Registrar Paciente</h2>
             </div>
             <div class="header-right-area">
-                <button onclick="performLogout()" class="exit-btn">
+                <button onclick="performLogout()" class="exit-btn" aria-label="Sair da Plataforma">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </header>
-
         <main class="main-content-area">
             <div class="form-content-wrapper">
                 <form class="patient-registration-form" onsubmit="processPatientRecord(event)">
@@ -183,7 +178,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group-section">
                         <h3>Informações de Endereço</h3>
                         <div class="form-row-group">
@@ -197,7 +191,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-control-actions">
                         <button type="button" onclick="showControlPanel()" class="secondary-action-btn">Cancelar Operação</button>
                         <button type="submit" class="primary-action-btn">Confirmar Registro do Paciente</button>
@@ -206,22 +199,20 @@
             </div>
         </main>
     </div>
-
     <div id="patientOverviewSection" class="view">
         <header class="app-header">
             <div class="header-left-area">
-                <button onclick="showControlPanel()" class="back-nav-btn">
+                <button onclick="showControlPanel()" class="back-nav-btn" aria-label="Voltar para o Painel de Controle">
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <h2>Lista de Pacientes</h2>
             </div>
             <div class="header-right-area">
-                <button onclick="performLogout()" class="exit-btn">
+                <button onclick="performLogout()" class="exit-btn" aria-label="Sair da Plataforma">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </header>
-
         <main class="main-content-area">
             <div class="list-control-header">
                 <div class="search-input-bar">
@@ -250,7 +241,150 @@
             </div>
         </main>
     </div>
-
+    <div id="newAppointmentSection" class="view">
+        <header class="app-header">
+            <div class="header-left-area">
+                <button onclick="showControlPanel()" class="back-nav-btn" aria-label="Voltar para o Painel de Controle">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Programar Novo Agendamento</h2>
+            </div>
+            <div class="header-right-area">
+                <button onclick="performLogout()" class="exit-btn" aria-label="Sair da Plataforma">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+        <main class="main-content-area">
+            <div class="form-content-wrapper">
+                <form class="appointment-form" onsubmit="processNewAppointment(event)">
+                    <div class="form-group-section">
+                        <h3>Detalhes do Agendamento</h3>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="appointmentPatient">Paciente</label>
+                                <select id="appointmentPatient" name="appointmentPatient" required>
+                                    <option value="">Selecione um Paciente</option>
+                                    </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="appointmentDate">Data</label>
+                                <input type="date" id="appointmentDate" name="appointmentDate" required>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="form-field">
+                                <label for="appointmentTime">Hora</label>
+                                <input type="time" id="appointmentTime" name="appointmentTime" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="appointmentReason">Motivo da Consulta</label>
+                                <input type="text" id="appointmentReason" name="appointmentReason" placeholder="Ex: Consulta de rotina, Retorno" required>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                             <div class="form-field">
+                                <label for="appointmentProfessional">Profissional</label>
+                                <select id="appointmentProfessional" name="appointmentProfessional" required>
+                                    <option value="">Selecione um Profissional</option>
+                                    <option value="Dr. Ana Paula">Dr. Ana Paula</option>
+                                    <option value="Dr. Carlos Mendes">Dr. Carlos Mendes</option>
+                                    <option value="Enf. Ricardo Silva">Enf. Ricardo Silva</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="appointmentType">Tipo de Atendimento</label>
+                                <select id="appointmentType" name="appointmentType" required>
+                                    <option value="">Selecione</option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Teleconsulta">Teleconsulta</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-control-actions">
+                        <button type="button" onclick="showControlPanel()" class="secondary-action-btn">Cancelar</button>
+                        <button type="submit" class="primary-action-btn">Confirmar Agendamento</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <div id="medicalRecordsSection" class="view">
+        <header class="app-header">
+            <div class="header-left-area">
+                <button onclick="showControlPanel()" class="back-nav-btn" aria-label="Voltar para o Painel de Controle">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Gerenciar Prontuários</h2>
+            </div>
+            <div class="header-right-area">
+                <button onclick="performLogout()" class="exit-btn" aria-label="Sair da Plataforma">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+        <main class="main-content-area">
+            <div class="list-control-header">
+                <div class="search-input-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar prontuário por paciente ou data..." onkeyup="filterMedicalRecords(this.value)">
+                </div>
+                <button onclick="showNewMedicalRecordForm()" class="primary-action-btn">
+                    <i class="fas fa-file-medical"></i> Novo Prontuário
+                </button>
+            </div>
+            <div class="table-display-container">
+                <table class="patient-data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Prontuário</th>
+                            <th>Paciente</th>
+                            <th>Data da Consulta</th>
+                            <th>Motivo</th>
+                            <th>Profissional</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicalRecordsBody">
+                        </tbody>
+                </table>
+            </div>
+             <div class="form-content-wrapper" id="newMedicalRecordForm" style="display: none;">
+                <form class="medical-record-form" onsubmit="processNewMedicalRecord(event)">
+                    <div class="form-group-section">
+                        <h3>Novo Registro de Prontuário</h3>
+                        <div class="form-field">
+                            <label for="recordPatient">Paciente</label>
+                            <select id="recordPatient" name="recordPatient" required>
+                                <option value="">Selecione um Paciente</option>
+                                </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="recordDate">Data da Consulta</label>
+                            <input type="date" id="recordDate" name="recordDate" required>
+                        </div>
+                         <div class="form-field">
+                            <label for="recordReason">Motivo da Consulta</label>
+                            <input type="text" id="recordReason" name="recordReason" placeholder="Ex: Dor de cabeça, Check-up" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="recordNotes">Notas do Atendimento</label>
+                            <textarea id="recordNotes" name="recordNotes" rows="5" placeholder="Descreva o atendimento, diagnóstico, procedimentos..." required></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label for="recordPrescription">Prescrição/Medicação (Opcional)</label>
+                            <textarea id="recordPrescription" name="recordPrescription" rows="3" placeholder="Ex: Paracetamol 500mg, 1x ao dia"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-control-actions">
+                        <button type="button" onclick="hideNewMedicalRecordForm()" class="secondary-action-btn">Cancelar</button>
+                        <button type="submit" class="primary-action-btn">Salvar Prontuário</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
